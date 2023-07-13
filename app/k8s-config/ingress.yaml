@@ -1,0 +1,41 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: yellow-cab-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: yellow-cab-authentication
+      port:
+        name: http
+  tls:
+    - secretName: yellow-cab-tls-secret
+    - hosts:
+        - 34.32.221.0
+  rules:
+    - http:
+        paths:
+          - path: /api/authentication
+            pathType: Prefix
+            backend:
+              service:
+                name: yellow-cab-authentication
+                port:
+                  name: http
+          - path: /api/stats
+            pathType: Prefix
+            backend:
+              service:
+                name: yellow-cab-statistics
+                port:
+                  name: http
+          - path: /api/bi
+            pathType: Prefix
+            backend:
+              service:
+                name: yellow-cab-business-intelligence
+                port:
+                  name: http

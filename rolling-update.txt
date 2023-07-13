@@ -1,0 +1,11 @@
+// Check current image
+kubectl describe pods
+
+// Update the image
+kubectl set image deployment.apps/yellow-cab-authentication-d authentication=computacaonuvem2022/authentication:v1
+
+// Confirm the update
+kubectl rollout status deployment.apps/yellow-cab-authentication-d
+
+// Rollback
+kubectl rollout undo deployments.apps/yellow-cab-authentication-d

@@ -1,0 +1,20 @@
+@baseUrl = http://34.32.221.0/api
+@token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6IjZJcmlWeG95NWp1c2xvOVFvbnFQeCJ9.eyJpc3MiOiJodHRwczovL2Rldi15ZWxsb3ctY2FiLnVrLmF1dGgwLmNvbS8iLCJzdWIiOiJnb29nbGUtb2F1dGgyfDExMjIzNzY1MTAxMTI3NTM4MDAyMSIsImF1ZCI6WyJodHRwczovL3llbGxvd2NhYi5jb20iLCJodHRwczovL2Rldi15ZWxsb3ctY2FiLnVrLmF1dGgwLmNvbS91c2VyaW5mbyJdLCJpYXQiOjE2ODYxODQxMzUsImV4cCI6MTY4NjI3MDUzNSwiYXpwIjoiOFViQnBoYTZBOFdSSHFOY2NCOWhWTExPYWpPRTVzVE4iLCJzY29wZSI6Im9wZW5pZCBwcm9maWxlIGVtYWlsIiwicGVybWlzc2lvbnMiOlsicmVhZDphZG1pbiJdfQ.beKNLBbdqtxRBWf55oPbTN5D1IzpKz28zfCSEM8GlmggzWW7ZGeqA-fZ6WuURGUKABqrX00mAtRql7kCIFv-w-tag4LldkOMdkfm2vixbPxuHsDloKBSmgskl7t25izGDqaUvhIQWroNVLcFe6MHgraivYpwMZ53OM8JRx-cX82qmFh32I-lO4CNuLFLO-n15g21Ix6oIrFGWloJQqQRvPd5Mhod5yECtjNFRD6s9FTop78Hm1D2-dZfjUnyUqy3YGvbXy2fkPlhKgA1azbcjt5wADgK0AH357oEkiO9Z0rBdQXIDUVFnz7BzNoLwWZuOZGQnbu4ds6r7k0iiooNQA
+@PULocationName = Central Park
+@DOLocationName = JFK Airport
+@DOLocationName2 = Bronx Park
+
+### Statistics - Time
+GET {{baseUrl}}/stats/time?PULocationName={{PULocationName}}&DOLocationName={{DOLocationName}}&PULocationName2={{PULocationName}}&DOLocationName2={{DOLocationName2}}&token={{token}}
+
+### Statistics - Congestion
+GET {{baseUrl}}/stats/congestion?PULocationName={{PULocationName}}&DOLocationName={{DOLocationName}}&PULocationName2={{PULocationName}}&DOLocationName2={{DOLocationName2}}&token={{token}}
+
+### Statistics - Cabs
+GET {{baseUrl}}/stats/cabs?LocationName={{PULocationName}}&LocationName2={{DOLocationName}}&token={{token}}
+
+### Business Intelligence - Tips
+GET {{baseUrl}}/bi/tips?PULocationName={{PULocationName}}&DOLocationName={{DOLocationName}}&token={{token}}
+
+### Business Intelligence - Amount
+GET {{baseUrl}}/bi/amount?PULocationName={{PULocationName}}&DOLocationName={{DOLocationName2}}&token={{token}}

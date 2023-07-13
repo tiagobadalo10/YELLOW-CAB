@@ -1,0 +1,89 @@
+openapi: 3.0.0
+
+info:
+  title: "YellowCab API"
+  description: "The YellowCab API provides relevant and authentic statistics about New York Yellow Trips. To access these, it is necessary to carry out an authentication and authorization process."
+  version: "1.0"
+  termsOfService: "http://yellowcab.com/terms"
+  contact:
+    name: "YellowCab API"
+    url: "http://yellowcab.com/api"
+    email: "computacaonuvem2022@gmail.com"
+  license:
+    name: ""
+    url: "http://yellowcab.com/price"
+
+servers:
+  - url: "/api"
+
+tags:
+  - name: Authentication
+    description: "System Authentication"
+
+paths:
+  /authentication:
+    get:
+      operationId: "authentication.home"
+      tags:
+        - Authentication
+      summary: Authentication landing page
+      responses:
+        "200":
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <html>  <head>  <meta charset="utf-8" /> <title>Auth0 Example</title>   </head> <body> {% if session %}<h1>Welcome {{session.userinfo.name}}!</h1><p><a href="/api/authentication/logout" id="qsLogoutBtn">Logout</a></p><div><pre>{{pretty}}</pre></div>{% else %}<h1 id="profileDropDown">Welcome Guest</h1><p><a href="/api/authentication/login" id="qsLoginBtn">Login</a></p>{% endif %}</body></html>
+
+  /authentication/login:
+    get:
+      operationId: "authentication.login"
+      tags:
+        - Authentication
+      summary: Logs in into the system
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                title: Login Sucessful
+                type: string
+                example: Login Sucessful
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid email/password supplied
+                type: string
+                example: Invalid email/password supplied
+
+  /authentication/logout:
+    get:
+      operationId: "authentication.logout"
+      tags:
+        - Authentication
+      summary: Logs out current logged in user session
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                title: Logout Sucessful
+                type: string
+                example: Logout Sucessful
+
+  /authentication/health:
+    get:
+      operationId: "authentication.health"
+      tags:
+        - Authentication
+      summary: Check microservice health
+      responses:
+        "200":
+          description: Successful response
+        "404":
+          description: Not found response

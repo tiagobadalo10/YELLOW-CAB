@@ -1,0 +1,167 @@
+openapi: 3.0.0
+
+info:
+  title: "YellowCab API"
+  description: "The YellowCab API provides relevant and authentic statistics about New York Yellow Trips. To access these, it is necessary to carry out an authentication and authorization process."
+  version: "1.0"
+  termsOfService: "https://yellowcab.com/terms"
+  contact:
+    name: "YellowCab API"
+    url: "https://yellowcab.com/api"
+    email: "computacaonuvem2022@gmail.com"
+  license:
+    name: ""
+    url: "https://yellowcab.com/price"
+
+servers:
+  - url: "/api"
+
+tags:
+  - name: Business Intelligence
+    description: "Business Analytics of New York Yellow Cab Ride Information"
+
+paths:
+  /bi/tips:
+    get:
+      operationId: "bi.get_tip_stats"
+      tags:
+        - Business Intelligence
+      summary: Get tips statistics
+      description: Returns tip statistics per trip.
+      parameters:
+        - $ref: "#/components/parameters/PULocationName"
+        - $ref: "#/components/parameters/DOLocationName"
+        - $ref: "#/components/parameters/token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TipsStatistics"
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid ID supplied
+                type: string
+                example: Invalid ID supplied
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Tips statistics not found
+                type: string
+                example: Tips statistics not found
+
+  /bi/amount:
+    get:
+      operationId: "bi.get_amount_stats"
+      tags:
+        - Business Intelligence
+      summary: Get amount statistics
+      description: Returns amount statistics per trip.
+      parameters:
+        - $ref: "#/components/parameters/PULocationName"
+        - $ref: "#/components/parameters/DOLocationName"
+        - $ref: "#/components/parameters/token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AmountStatistics"
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid ID supplied
+                type: string
+                example: Invalid ID supplied
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Amount statistics not found
+                type: string
+                example: Amount statistics not found
+
+  /bi/health:
+    get:
+      operationId: "bi.health"
+      tags:
+        - Business Intelligence
+      summary: Check microservice health
+      responses:
+        "200":
+          description: Successful response
+        "404":
+          description: Not found response
+
+components:
+  parameters:
+    PULocationName:
+      name: PULocationName
+      in: query
+      description: "PULocationName. Example: Central Park. TLC Taxi Zone in which the taximeter was engaged."
+      required: True
+      schema:
+        type: string
+        example: "Central Park"
+    DOLocationName:
+      name: DOLocationName
+      in: query
+      description: "DOLocationName. Example: Central Park. TLC Taxi Zone in which the taximeter was disengaged."
+      required: True
+      schema:
+        type: string
+        example: "Central Park"
+    token:
+      name: token
+      in: query
+      description: "Access token"
+      required: True
+      schema:
+        type: string
+        example: "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaXNzIjoiaHR0cHM6Ly9kZXYteWVsbG93LWNhYi51ay5hdXRoMC5jb20vIn0..rvSTar6JtInHF7Zt.MjgQujk5ogDaBeYXwUUESUTbk5EocFNWl8EZKadD1RSc368-mRTYNwPeDFzclATm9RcNQMh5rn6MeeRQYQAIYmcvM-wUJpV72_JGc9iX7w2a9_y6mpmcEMpUxxvYP67a7A3EEK3zQyF07szvHjDSYXXuygHOR16924YlFfGub8ErzYXQIPygQzobF-Hra0gV_SuAxSBaKho9CuTwAVv5Ih5qKfr4dvzPXnyggM4nPybi8TFy1SkZeNCmb6c2hMMGzR0Qoakc08bCWPKkLgTeTPJgUZqXziHHwStHE-TIJi3FhVR33Bu8gMQdUzV-WLP8Zoz_l0_F.MUccfem5-LBPkYI1WIQm1A"
+
+  schemas:
+    TipsStatistics:
+      type: object
+      properties:
+        avg_tips:
+          type: number
+          description: Average time
+        count_tips:
+          type: number
+          description: Count tips
+        max_tips:
+          type: number
+          description: Maximum time
+        min_tips:
+          type: number
+          description: Minimum tips
+
+    AmountStatistics:
+      type: object
+      properties:
+        avg_amount:
+          type: number
+          description: Average amount
+        count_amount:
+          type: number
+          description: Count amount
+        max_amount:
+          type: number
+          description: Maximum amount
+        min_amount:
+          type: number
+          description: Minimum amount
+        total_amount:
+          type: number
+          description: Total amount

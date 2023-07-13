@@ -1,0 +1,8 @@
+Flask==2.2.3
+connexion==2.14.1
+swagger-ui-bundle==0.0.9
+authlib>=1.0
+requests>=2.27.1
+google-cloud-secret-manager==2.10.0
+prometheus-client
+psutil

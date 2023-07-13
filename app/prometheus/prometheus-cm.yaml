@@ -1,0 +1,25 @@
+scrape_configs:
+  - job_name: "prometheus"
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["localhost:9090"]
+
+  - job_name: yellow-cab-authentication-m
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["yellow-cab-authentication-m:80"]
+
+  - job_name: yellow-cab-business-intelligence-m
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["yellow-cab-business-intelligence-m:80"]
+
+  - job_name: yellow-cab-statistics-m
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["yellow-cab-statistics-m:80"]
+
+  - job_name: yellow-cab-zones-m
+    scrape_interval: 5s
+    static_configs:
+      - targets: ["yellow-cab-zones-m:80"]

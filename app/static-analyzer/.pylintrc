@@ -1,0 +1,19 @@
+[MASTER]
+
+# Specify the maximum line length
+max-line-length=120
+
+# Ignore some directories and files
+ignore=*/tests/*,*/test_*.py,zone_pb2_grpc.py,zone_pb2.py
+disable=C0111,E0401,W0105,W0613,R0801,C0103,R0903
+
+[FORMAT]
+
+# Set the indentation string
+indent-string = '    '
+
+[BASIC]
+
+# Specify the level of messages to display
+output-format=colorized
+reports=n

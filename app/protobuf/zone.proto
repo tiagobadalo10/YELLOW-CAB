@@ -1,0 +1,39 @@
+syntax = "proto3";
+
+package zonepb;
+
+
+message ZoneRequest {
+    int64 locationID = 1;
+}
+
+message ZoneResponse {
+    Zone zone = 1;
+}
+
+message ZonesRequest {
+    repeated string zone = 1;
+}
+
+message ZonesResponse {
+    repeated Zone zones = 1;
+}
+
+message Zone {
+    int64 locationID = 1;
+    string borough = 2;
+    string service_zone = 3;
+    string zone = 4;
+}
+
+message HealthCheckRequest {}
+
+message HealthCheckResponse {
+  string status = 1;
+}
+
+service ZoneService {
+    rpc GetZone (ZoneRequest) returns (ZoneResponse)  {} ;
+    rpc GetZones (ZonesRequest) returns (ZonesResponse) {};
+    rpc HealthCheck(HealthCheckRequest) returns (HealthCheckResponse) {};
+}

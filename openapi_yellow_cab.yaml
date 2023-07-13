@@ -1,0 +1,460 @@
+openapi: 3.0.0
+
+info:
+  title: "YellowCab API"
+  description: "The YellowCab API provides relevant and authentic statistics about New York Yellow Trips. To access these, it is necessary to carry out an authentication and authorization process."
+  version: "1.0"
+  termsOfService: "https://yellowcab.com/terms"
+  contact:
+    name: "YellowCab API"
+    url: "https://yellowcab.com/api"
+    email: "computacaonuvem2022@gmail.com"
+  license:
+    name: ""
+    url: "https://yellowcab.com/price"
+
+servers:
+  - url: "/api"
+
+tags:
+  - name: Authentication
+    description: "System Authentication"
+  - name: Business Intelligence
+    description: "Business Analytics of New York Yellow Cab Ride Information"
+  - name: Statistics
+    description: "Statistics Results of New York Yellow Cab Ride Information"
+
+paths:
+  /authentication:
+    get:
+      operationId: "authentication.home"
+      tags:
+        - Authentication
+      summary: Authentication landing page
+      responses:
+        "200":
+          description: OK
+          content:
+            text/html:
+              schema:
+                type: string
+                example: <html>  <head>  <meta charset="utf-8" /> <title>Auth0 Example</title>   </head> <body> {% if session %}<h1>Welcome {{session.userinfo.name}}!</h1><p><a href="/api/authentication/logout" id="qsLogoutBtn">Logout</a></p><div><pre>{{pretty}}</pre></div>{% else %}<h1 id="profileDropDown">Welcome Guest</h1><p><a href="/api/authentication/login" id="qsLoginBtn">Login</a></p>{% endif %}</body></html>
+
+  /authentication/login:
+    get:
+      operationId: "authentication.login"
+      tags:
+        - Authentication
+      summary: Logs in into the system
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                title: Login Sucessful
+                type: string
+                example: Login Sucessful
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid email/password supplied
+                type: string
+                example: Invalid email/password supplied
+
+  /authentication/logout:
+    get:
+      operationId: "authentication.logout"
+      tags:
+        - Authentication
+      summary: Logs out current logged in user session
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                title: Logout Sucessful
+                type: string
+                example: Logout Sucessful
+
+  /authentication/health:
+    get:
+      operationId: "authentication.health"
+      tags:
+        - Authentication
+      summary: Check microservice health
+      responses:
+        "200":
+          description: Successful response
+        "404":
+          description: Not found response
+
+  /bi/tips:
+    get:
+      operationId: "bi.get_tip_stats"
+      tags:
+        - Business Intelligence
+      summary: Get tips statistics
+      description: Returns tip statistics per trip.
+      parameters:
+        - $ref: "#/components/parameters/PULocationName"
+        - $ref: "#/components/parameters/DOLocationName"
+        - $ref: "#/components/parameters/token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TipsStatistics"
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid ID supplied
+                type: string
+                example: Invalid ID supplied
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Tips statistics not found
+                type: string
+                example: Tips statistics not found
+
+  /bi/amount:
+    get:
+      operationId: "bi.get_amount_stats"
+      tags:
+        - Business Intelligence
+      summary: Get amount statistics
+      description: Returns amount statistics per trip.
+      parameters:
+        - $ref: "#/components/parameters/PULocationName"
+        - $ref: "#/components/parameters/DOLocationName"
+        - $ref: "#/components/parameters/token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AmountStatistics"
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid ID supplied
+                type: string
+                example: Invalid ID supplied
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Amount statistics not found
+                type: string
+                example: Amount statistics not found
+
+  /bi/health:
+    get:
+      operationId: "bi.health"
+      tags:
+        - Business Intelligence
+      summary: Check microservice health
+      responses:
+        "200":
+          description: Successful response
+        "404":
+          description: Not found response
+
+  /stats/time:
+    get:
+      operationId: "statistics.get_time_stats"
+      tags:
+        - Statistics
+      summary: Get time statistics in two rides
+      description: Returns time statistics of two rides.
+      parameters:
+        - $ref: "#/components/parameters/PULocationName"
+        - $ref: "#/components/parameters/DOLocationName"
+        - $ref: "#/components/parameters/PULocationName2"
+        - $ref: "#/components/parameters/DOLocationName2"
+        - $ref: "#/components/parameters/token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TimeStatistics"
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid Names supplied
+                type: string
+                example: Invalid Names supplied
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Route time statistics not found
+                type: string
+                example: Route time statistics not found
+
+  /stats/congestion:
+    get:
+      operationId: "statistics.get_congestion_stats"
+      tags:
+        - Statistics
+      summary: Get congestion statistics
+      description: Returns congestion statistics per ride.
+      parameters:
+        - $ref: "#/components/parameters/PULocationName"
+        - $ref: "#/components/parameters/DOLocationName"
+        - $ref: "#/components/parameters/PULocationName2"
+        - $ref: "#/components/parameters/DOLocationName2"
+        - $ref: "#/components/parameters/token"
+
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CongestionStatistics"
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid Names supplied
+                type: string
+                example: Invalid Names supplied
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Congestion statistics not found
+                type: string
+                example: Congestion statistics not found
+
+  /stats/cabs:
+    get:
+      operationId: "statistics.get_cab_stats"
+      tags:
+        - Statistics
+      summary: Get cab statistics
+      description: Returns the number of cabs with the LocationName as destination or source.
+      parameters:
+        - $ref: "#/components/parameters/LocationName"
+        - $ref: "#/components/parameters/LocationName2"
+        - $ref: "#/components/parameters/token"
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CabStatistics"
+        "400":
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                title: Invalid LocationName supplied
+                type: string
+                example: Invalid LocationName supplied
+        "404":
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                title: Cabs statistics not found
+                type: string
+                example: Cabs statistics not found
+
+  /stats/health:
+    get:
+      operationId: "statistics.health"
+      tags:
+        - Statistics
+      summary: Check microservice health
+      responses:
+        "200":
+          description: Successful response
+        "404":
+          description: Not found response
+
+components:
+  parameters:
+    PULocationName:
+      name: PULocationName
+      in: query
+      description: "PULocationName. Example: Central Park. TLC Taxi Zone in which the taximeter was engaged."
+      required: True
+      schema:
+        type: string
+        example: "Central Park"
+    DOLocationName:
+      name: DOLocationName
+      in: query
+      description: "DOLocationName. Example: JFK Airport. TLC Taxi Zone in which the taximeter was disengaged."
+      required: True
+      schema:
+        type: string
+        example: "Central Park"
+    PULocationName2:
+      name: PULocationName2
+      in: query
+      description: "PULocationName 2. Example: Central Park. TLC Taxi Zone in which the taximeter was engaged."
+      required: True
+      schema:
+        type: string
+        example: "Central Park"
+    DOLocationName2:
+      name: DOLocationName2
+      in: query
+      description: "DOLocationName 2. Example: Newark Airport. TLC Taxi Zone in which the taximeter was disengaged."
+      required: True
+      schema:
+        type: string
+        example: "Newark Airport"
+    LocationName:
+      name: LocationName
+      description: "Location Name 1. Example: Central Park. TLC Taxi Zone"
+      in: query
+      required: True
+      schema:
+        type: "string"
+    LocationName2:
+      name: LocationName2
+      description: "Location Name 2. Example: Bronx Park. TLC Taxi Zone"
+      in: query
+      required: True
+      schema:
+        type: "string"
+    token:
+      name: token
+      in: query
+      description: "Access token"
+      required: True
+      schema:
+        type: string
+        example: "eyJhbGciOiJkaXIiLCJlbmMiOiJBMjU2R0NNIiwiaXNzIjoiaHR0cHM6Ly9kZXYteWVsbG93LWNhYi51ay5hdXRoMC5jb20vIn0..rvSTar6JtInHF7Zt.MjgQujk5ogDaBeYXwUUESUTbk5EocFNWl8EZKadD1RSc368-mRTYNwPeDFzclATm9RcNQMh5rn6MeeRQYQAIYmcvM-wUJpV72_JGc9iX7w2a9_y6mpmcEMpUxxvYP67a7A3EEK3zQyF07szvHjDSYXXuygHOR16924YlFfGub8ErzYXQIPygQzobF-Hra0gV_SuAxSBaKho9CuTwAVv5Ih5qKfr4dvzPXnyggM4nPybi8TFy1SkZeNCmb6c2hMMGzR0Qoakc08bCWPKkLgTeTPJgUZqXziHHwStHE-TIJi3FhVR33Bu8gMQdUzV-WLP8Zoz_l0_F.MUccfem5-LBPkYI1WIQm1A"
+
+  schemas:
+    TipsStatistics:
+      type: object
+      properties:
+        avg_tips:
+          type: number
+          description: Average time
+        count_tips:
+          type: number
+          description: Count tips
+        max_tips:
+          type: number
+          description: Maximum time
+        min_tips:
+          type: number
+          description: Minimum tips
+
+    AmountStatistics:
+      type: object
+      properties:
+        avg_amount:
+          type: number
+          description: Average amount
+        count_amount:
+          type: number
+          description: Count amount
+        max_amount:
+          type: number
+          description: Maximum amount
+        min_amount:
+          type: number
+          description: Minimum amount
+        total_amount:
+          type: number
+          description: Total amount
+
+    TimeStatistics:
+      type: object
+      properties:
+        trip1:
+          type: object
+          description: First Trip
+          properties:
+            min_time:
+              type: number
+              description: Minimum time in minutes
+            max_time:
+              type: number
+              description: Maximum time in minutes
+            avg_time:
+              type: number
+              description: Average time in minutes
+        trip2:
+          type: object
+          description: Second Trip
+          properties:
+            min_time:
+              type: number
+              description: Minimum time in minutes
+            max_time:
+              type: number
+              description: Maximum time in minutes
+            avg_time:
+              type: number
+              description: Average time in minutes
+
+    CongestionStatistics:
+      type: object
+      properties:
+        trip1:
+          type: object
+          description: First Trip
+          properties:
+            min_congestion:
+              type: number
+              description: Minimum congestion surcharge
+            max_congestion:
+              type: number
+              description: Maximum congestion surcharge
+            avg_congestion:
+              type: number
+              description: Average congestion surcharge
+        trip2:
+          type: object
+          description: Second Trip
+          properties:
+            min_congestion:
+              type: number
+              description: Minimum congestion surcharge
+            max_congestion:
+              type: number
+              description: Maximum congestion surcharge
+            avg_congestion:
+              type: number
+              description: Average congestion surcharge
+
+    CabStatistics:
+      type: object
+      properties:
+        number_cabs_first_location:
+          type: number
+          description: Number of cabs at first location
+        number_cabs_second_location:
+          type: number
+          description: Number of cabs at second location

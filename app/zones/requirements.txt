@@ -1,0 +1,9 @@
+Flask==2.2.3
+connexion==2.14.1
+swagger-ui-bundle==0.0.9
+grpcio==1.51.3
+grpcio-tools==1.51.3
+pybigquery==0.5.0
+google-cloud-secret-manager==2.10.0
+prometheus-client
+psutil

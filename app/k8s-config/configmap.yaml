@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: yellow-cab-configmap
+  labels:
+    app: yellow-cab
+data:
+  project_id: "fcul-388721"
+  dataset_name: "zone_locations"
+  stats_table: "stats_table"
+  locations_table: "locations"
+  zones_conn: "yellow-cab-zones:80"

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>Yellow Cab</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			background-color: #f2f2f2;
+			padding: 20px;
+		}
+		h1 {
+			color: #007bff;
+			margin-top: 0;
+		}
+		#logoutBtn, #loginBtn {
+			display: inline-block;
+			background-color: #007bff;
+			color: #fff;
+			padding: 8px 16px;
+			text-decoration: none;
+			border-radius: 4px;
+			margin-top: 16px;
+		}
+		#logoutBtn:hover, #loginBtn:hover {
+			background-color: #0062cc;
+		}
+		pre {
+			background-color: #fff;
+			padding: 16px;
+			overflow: auto;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+			font-size: 14px;
+			line-height: 1.4;
+			margin-top: 16px;
+		}
+	</style>
+</head>
+<body>
+	{% if session %}
+		<h1>Welcome {{session.name}}!</h1>
+		<a href="/api/authentication/logout" id="logoutBtn">Logout</a>
+		<div><pre>{{pretty}}</pre></div>
+	{% else %}
+		<h1 id="profileDropDown">Welcome Guest</h1>
+		<a href="/api/authentication/login" id="loginBtn">Login</a>
+	{% endif %}
+</body>
+</html>
